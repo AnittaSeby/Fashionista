@@ -1,0 +1,143 @@
+.admin-login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6d365;
+}
+
+.admin-login-box {
+  background: #fff;
+  padding: 36px 28px;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  align-items: center;
+}
+
+.admin-login-title {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-bottom: 22px;
+  color: #f5576c;
+}
+
+.admin-login-input {
+  width: 100%;
+  padding: 10px 16px;
+  margin-bottom: 14px;
+  border-radius: 7px;
+  border: 1px solid #eee;
+  font-size: 1rem;
+  background: #fafafa;
+}
+
+.admin-login-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: #f5576c;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.admin-login-msg {
+  margin-top: 10px;
+  color: #f5576c;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.admin-page-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 32px 24px;
+}
+
+.admin-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: #f5576c;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.admin-tabs button {
+  padding: 8px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #eee;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.admin-tabs .active {
+  background: #fda085;
+  color: #fff;
+}
+
+.admin-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.admin-list th, .admin-list td {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+}
+
+.admin-list th {
+  background: #f6d365;
+}
+
+.admin-list img {
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.admin-form {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-form input {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  font-size: 1rem;
+}
+
+.admin-form button {
+  padding: 8px 0;
+  background: #f5576c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.admin-form button:last-child {
+  background: #aaa;
+  color: #fff;
+}

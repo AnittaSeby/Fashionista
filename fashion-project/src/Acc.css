@@ -1,0 +1,84 @@
+.acc-hero {
+  background: linear-gradient(120deg, #fceabb 0%, #f8b500 100%);
+  color: #333;
+  padding: 70px 20px 50px 20px;
+  text-align: center;
+  border-radius: 0 0 40px 40px;
+  box-shadow: 0 8px 32px rgba(248,181,0,0.10);
+  margin-bottom: 40px;
+}
+
+.acc-hero-title {
+  font-size: 2.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  text-shadow: 2px 2px 8px #fceabb44;
+}
+
+.acc-hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  color: #7a5a00;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.acc-items {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 0 0 0 0;
+  flex-wrap: wrap;
+}
+
+.acc-card {
+  background: #fffbe6;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(248,181,0,0.13);
+  padding: 28px 20px;
+  min-width: 210px;
+  text-align: center;
+  color: #7a5a00;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: 2px solid #f8b500;
+}
+
+.acc-card:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 32px rgba(248,181,0,0.18);
+  border-color: #fceabb;
+}
+
+.acc-img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 18px;
+  border: 2px solid #f8b500;
+  background: #fff;
+}
+
+.acc-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 7px;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.acc-for {
+  color: #f8b500;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.acc-price {
+  color: #b38b00;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+

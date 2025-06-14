@@ -1,0 +1,113 @@
+.women-hero {
+  background: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+  color: #fff;
+  padding: 70px 20px 50px 20px;
+  text-align: right;
+  border-radius: 0 0 40px 40px;
+  box-shadow: 0 8px 32px rgba(245,87,108,0.10);
+  margin-bottom: 40px;
+}
+
+.women-hero-title {
+  font-size: 2.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  font-family: 'Playfair Display', 'Montserrat', Arial, sans-serif;
+  text-shadow: 2px 2px 8px #f5576c44;
+}
+
+.women-hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  color: #ffe0e6;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.women-items {
+  display: flex;
+  justify-content: flex-end;
+  gap: 40px;
+  margin: 0 40px 0 0;
+  flex-wrap: wrap;
+}
+
+.women-card {
+  background: #fff0f6;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(245,87,108,0.13);
+  padding: 28px 20px;
+  min-width: 210px;
+  text-align: right;
+  color: #f5576c;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: 2px solid #f093fb;
+}
+
+.women-card:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 8px 32px rgba(245,87,108,0.18);
+  border-color: #f5576c;
+}
+
+.women-img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  border: 2px solid #f5576c;
+  background: #fff;
+}
+
+.women-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 7px;
+  font-family: 'Playfair Display', 'Montserrat', Arial, sans-serif;
+}
+
+.women-price {
+  color: #f5576c;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.home-btn {
+  margin: 24px 0 0 32px;
+  padding: 10px 28px;
+  background: #f5576c;
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(245,87,108,0.10);
+}
+
+.home-btn:hover {
+  background: #f093fb;
+  color: #222;
+}
+
+.buy-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.2s;
+}
+
+.buy-btn:hover {
+  background: #fda085;
+  color: #222;
+}
