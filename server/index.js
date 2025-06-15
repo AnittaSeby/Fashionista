@@ -101,15 +101,25 @@ app.get('/accessories', async (req, res) => {
   }
 });
 
-// Add product to a collection
+// Add product to a collection and detailed page
 app.post('/admin/add-product', async (req, res) => {
-  const { category, name, price, img } = req.body;
+  const { category, name, price, img, description, images } = req.body;
   if (!category || !name || !price || !img)
     return res.status(400).json({ msg: 'Missing fields' });
 
   try {
     const db = await connectDB();
-    await db.collection(category).insertOne({ name, price, img });
+    // Insert product and get insertedId
+    const result = await db.collection(category).insertOne({ name, price, img });
+    const productId = result.insertedId;
+    // Insert detailed info with the same _id
+    await db.collection('detailed').insertOne({
+      _id: productId,
+      name,
+      price,
+      description: description || "",
+      images: images || [],
+    });
     res.json({ msg: 'Product added successfully' });
   } catch (err) {
     console.error("Error adding product:", err);
@@ -117,10 +127,10 @@ app.post('/admin/add-product', async (req, res) => {
   }
 });
 
-// Edit product in a collection
+// Edit product in a collection and detailed page
 app.put('/admin/edit-product/:category/:id', async (req, res) => {
   const { category, id } = req.params;
-  const { name, price, img } = req.body;
+  const { name, price, img, description, images } = req.body;
   if (!name || !price || !img)
     return res.status(400).json({ msg: 'Missing fields' });
 
@@ -129,6 +139,11 @@ app.put('/admin/edit-product/:category/:id', async (req, res) => {
     await db.collection(category).updateOne(
       { _id: new ObjectId(id) },
       { $set: { name, price, img } }
+    );
+    await db.collection('detailed').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { name, price, description: description || "", images: images || [] } },
+      { upsert: true }
     );
     res.json({ msg: 'Product updated successfully' });
   } catch (err) {
@@ -147,6 +162,20 @@ app.delete('/admin/delete-product/:category/:id', async (req, res) => {
   } catch (err) {
     console.error("Error deleting product:", err);
     res.status(500).json({ msg: 'Error deleting product' });
+  }
+});
+
+// Fetch detailed item by id
+app.get('/detailed/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const db = await connectDB();
+    const item = await db.collection('detailed').findOne({ _id: new ObjectId(id) });
+    if (!item) return res.status(404).json({ msg: 'Item not found' });
+    res.json(item);
+  } catch (err) {
+    console.error("Error fetching detailed item:", err);
+    res.status(500).json({ msg: 'Error fetching detailed item' });
   }
 });
 

@@ -13,6 +13,10 @@ function Women() {
       .catch(() => setWomenItems([]));
   }, []);
 
+  const handleBuyNow = (id) => {
+    navigate(`/detailed/${id}`);
+  };
+
   return (
     <div>
       <section className="women-hero">
@@ -27,7 +31,7 @@ function Women() {
             <img src={item.img || item.image} alt={item.name} className="women-img" />
             <div className="women-title">{item.name}</div>
             <div className="women-price">{item.price}</div>
-            <button className="buy-btn">Buy Now</button>
+            <button className="buy-btn" onClick={() => handleBuyNow(item._id)}>Show More</button>
           </div>
         ))}
       </section>

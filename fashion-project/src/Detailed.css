@@ -1,0 +1,102 @@
+body {
+  background: linear-gradient(120deg, #fffde4 0%, #ffe9a9 100%);
+  min-height: 100vh;
+}
+
+.detailed-container {
+  max-width: 900px;
+  margin: 48px auto;
+  padding: 40px 32px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24px;
+  box-shadow: 0 6px 32px rgba(233, 30, 99, 0.10), 0 1.5px 6px rgba(0,0,0,0.04);
+  text-align: center;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+}
+
+.detailed-container h2 {
+  margin-bottom: 28px;
+  font-size: 2.4rem;
+  color: #e91e63;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.detailed-images {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.detailed-img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 2px solid #e91e63;
+  background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(233, 30, 99, 0.08);
+}
+.detailed-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(233, 30, 99, 0.18);
+}
+
+.detailed-price {
+  font-size: 2rem;
+  color: #d81b60;
+  margin-bottom: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.detailed-description {
+  font-size: 1.15rem;
+  color: #444;
+  margin-bottom: 10px;
+  line-height: 1.7;
+  background: #fff3f8;
+  padding: 18px 24px;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 1px 4px rgba(233, 30, 99, 0.07);
+}
+
+.detailed-buy-btn {
+  margin-top: 28px;
+  padding: 14px 48px;
+  background: linear-gradient(90deg, #ffe082 0%, #ffd54f 100%);
+  color: #222;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(255, 215, 79, 0.15);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.detailed-buy-btn:hover {
+  background: linear-gradient(90deg, #ffd54f 0%, #ffe082 100%);
+  transform: translateY(-2px) scale(1.04);
+  color: #e91e63;
+}
+
+@media (max-width: 700px) {
+  .detailed-container {
+    padding: 18px 4vw;
+  }
+  .detailed-images {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .detailed-img {
+    width: 100%;
+    max-width: 320px;
+    height: 180px;
+    margin: 0 auto;
+  }
+}
