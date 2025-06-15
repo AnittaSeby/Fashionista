@@ -1,126 +1,137 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./adminpage.css";
 
-const initialData = {
-  men: [
-    { name: "Classic Denim Jacket", img: "", price: "" },
-    { name: "Slim Fit Shirt", img: "", price: "" },
-  ],
-  women: [
-    { name: "Floral Summer Dress", img: "", price: "" },
-    { name: "Elegant Handbag", img: "", price: "" },
-  ],
-  accessories: [
-    { name: "Wallet", img: "", price: "" },
-    { name: "Sunglasses", img: "", price: "" },
-  ],
-};
+const categories = [
+  { label: "Men", value: "men" },
+  { label: "Women", value: "women" },
+  { label: "Accessories", value: "accessories" }
+];
 
 function AdminPage() {
-  const [tab, setTab] = useState("men");
-  const [data, setData] = useState(initialData);
-  const [form, setForm] = useState({ name: "", img: "", price: "" });
-  const [editIdx, setEditIdx] = useState(null);
+  const [category, setCategory] = useState("men");
+  const [products, setProducts] = useState([]);
+  const [form, setForm] = useState({ name: "", price: "", img: "" });
+  const [editId, setEditId] = useState(null);
 
-  const handleChange = (e) => {
+  // Fetch products for selected category
+  useEffect(() => {
+    fetch(`http://localhost:5000/${category}`)
+      .then(res => res.json())
+      .then(data => setProducts(data))
+      .catch(() => setProducts([]));
+    setForm({ name: "", price: "", img: "" });
+    setEditId(null);
+  }, [category]);
+
+  // Handle form input
+  const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleAdd = () => {
-    if (!form.name || !form.img || !form.price) return;
-    setData({ ...data, [tab]: [...data[tab], form] });
-    setForm({ name: "", img: "", price: "" });
+  // Add or update product
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if (!form.name || !form.price || !form.img) return;
+
+    if (editId) {
+      // Edit
+      await fetch(`http://localhost:5000/admin/edit-product/${category}/${editId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form)
+      });
+    } else {
+      // Add
+      await fetch("http://localhost:5000/admin/add-product", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, category })
+      });
+    }
+    // Refresh list
+    fetch(`http://localhost:5000/${category}`)
+      .then(res => res.json())
+      .then(data => setProducts(data));
+    setForm({ name: "", price: "", img: "" });
+    setEditId(null);
   };
 
-  const handleEdit = (idx) => {
-    setEditIdx(idx);
-    setForm(data[tab][idx]);
+  // Delete product
+  const handleDelete = async id => {
+    await fetch(`http://localhost:5000/admin/delete-product/${category}/${id}`, {
+      method: "DELETE"
+    });
+    setProducts(products.filter(p => p._id !== id));
   };
 
-  const handleUpdate = () => {
-    const updated = data[tab].map((item, idx) =>
-      idx === editIdx ? form : item
-    );
-    setData({ ...data, [tab]: updated });
-    setEditIdx(null);
-    setForm({ name: "", img: "", price: "" });
-  };
-
-  const handleDelete = (idx) => {
-    setData({ ...data, [tab]: data[tab].filter((_, i) => i !== idx) });
-    setEditIdx(null);
-    setForm({ name: "", img: "", price: "" });
+  // Edit product (populate form)
+  const handleEdit = product => {
+    setForm({ name: product.name, price: product.price, img: product.img || product.image });
+    setEditId(product._id);
   };
 
   return (
     <div className="admin-page-container">
-      <h2 className="admin-title">Admin Panel</h2>
-      <div className="admin-tabs">
-        <button className={tab === "men" ? "active" : ""} onClick={() => setTab("men")}>Men</button>
-        <button className={tab === "women" ? "active" : ""} onClick={() => setTab("women")}>Women</button>
-        <button className={tab === "accessories" ? "active" : ""} onClick={() => setTab("accessories")}>Accessories</button>
+      <h2 className="admin-title">Admin Product Management</h2>
+      <div>
+        <label>Category: </label>
+        <select value={category} onChange={e => setCategory(e.target.value)}>
+          {categories.map(c => (
+            <option key={c.value} value={c.value}>{c.label}</option>
+          ))}
+        </select>
       </div>
-      <div className="admin-list">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Image URL</th>
-              <th>Price</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data[tab].map((item, idx) => (
-              <tr key={idx}>
-                <td>{item.name}</td>
-                <td>
-                  {item.img ? (
-                    <img src={item.img} alt={item.name} style={{ width: 40, height: 40 }} />
-                  ) : (
-                    <span style={{ color: "#aaa" }}>No Image</span>
-                  )}
-                </td>
-                <td>{item.price}</td>
-                <td>
-                  <button onClick={() => handleEdit(idx)}>Edit</button>
-                  <button onClick={() => handleDelete(idx)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="admin-form">
-        <h3>{editIdx !== null ? "Edit Item" : "Add New Item"}</h3>
+      <form onSubmit={handleSubmit} className="admin-form">
         <input
           name="name"
-          placeholder="Name"
+          placeholder="Product Name"
           value={form.name}
           onChange={handleChange}
-        />
-        <input
-          name="img"
-          placeholder="Image URL"
-          value={form.img}
-          onChange={handleChange}
+          required
         />
         <input
           name="price"
           placeholder="Price"
           value={form.price}
           onChange={handleChange}
+          required
         />
-        {editIdx !== null ? (
-          <button onClick={handleUpdate}>Update</button>
-        ) : (
-          <button onClick={handleAdd}>Add</button>
-        )}
-        {editIdx !== null && (
-          <button onClick={() => { setEditIdx(null); setForm({ name: "", img: "", price: "" }); }}>
-            Cancel
-          </button>
-        )}
+        <input
+          name="img"
+          placeholder="Image URL"
+          value={form.img}
+          onChange={handleChange}
+          required
+        />
+        <button type="submit">{editId ? "Update" : "Add"} Product</button>
+        {editId && <button type="button" onClick={() => { setForm({ name: "", price: "", img: "" }); setEditId(null); }}>Cancel</button>}
+      </form>
+      <div className="admin-list">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map(p => (
+              <tr key={p._id}>
+                <td>{p.name}</td>
+                <td>{p.price}</td>
+                <td>
+                  <img src={p.img || p.image} alt={p.name} style={{ width: 60 }} />
+                </td>
+                <td>
+                  <button onClick={() => handleEdit(p)}>Edit</button>
+                  <button onClick={() => handleDelete(p._id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const bcrypt = require('bcryptjs');
 
 const app = express();
@@ -63,6 +63,91 @@ app.post('/adminlogin', async (req, res) => {
     return res.status(401).json({ msg: 'Invalid admin credentials' });
 
   res.json({ msg: 'Admin login successful' });
+});
+
+// Fetch all men items
+app.get('/men', async (req, res) => {
+  try {
+    const db = await connectDB();
+    const menItems = await db.collection('men').find({}).toArray();
+    res.json(menItems);
+  } catch (err) {
+    console.error("Error fetching men items:", err); // Add error logging
+    res.status(500).json({ msg: 'Error fetching men items' });
+  }
+});
+
+// Fetch all women items
+app.get('/women', async (req, res) => {
+  try {
+    const db = await connectDB();
+    const womenItems = await db.collection('women').find({}).toArray();
+    res.json(womenItems);
+  } catch (err) {
+    console.error("Error fetching women items:", err);
+    res.status(500).json({ msg: 'Error fetching women items' });
+  }
+});
+
+// Fetch all accessories items
+app.get('/accessories', async (req, res) => {
+  try {
+    const db = await connectDB();
+    const accessoriesItems = await db.collection('accessories').find({}).toArray();
+    res.json(accessoriesItems);
+  } catch (err) {
+    console.error("Error fetching accessories items:", err);
+    res.status(500).json({ msg: 'Error fetching accessories items' });
+  }
+});
+
+// Add product to a collection
+app.post('/admin/add-product', async (req, res) => {
+  const { category, name, price, img } = req.body;
+  if (!category || !name || !price || !img)
+    return res.status(400).json({ msg: 'Missing fields' });
+
+  try {
+    const db = await connectDB();
+    await db.collection(category).insertOne({ name, price, img });
+    res.json({ msg: 'Product added successfully' });
+  } catch (err) {
+    console.error("Error adding product:", err);
+    res.status(500).json({ msg: 'Error adding product' });
+  }
+});
+
+// Edit product in a collection
+app.put('/admin/edit-product/:category/:id', async (req, res) => {
+  const { category, id } = req.params;
+  const { name, price, img } = req.body;
+  if (!name || !price || !img)
+    return res.status(400).json({ msg: 'Missing fields' });
+
+  try {
+    const db = await connectDB();
+    await db.collection(category).updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { name, price, img } }
+    );
+    res.json({ msg: 'Product updated successfully' });
+  } catch (err) {
+    console.error("Error editing product:", err);
+    res.status(500).json({ msg: 'Error editing product' });
+  }
+});
+
+// Delete product from a collection
+app.delete('/admin/delete-product/:category/:id', async (req, res) => {
+  const { category, id } = req.params;
+  try {
+    const db = await connectDB();
+    await db.collection(category).deleteOne({ _id: new ObjectId(id) });
+    res.json({ msg: 'Product deleted successfully' });
+  } catch (err) {
+    console.error("Error deleting product:", err);
+    res.status(500).json({ msg: 'Error deleting product' });
+  }
 });
 
 const PORT = 5000;
