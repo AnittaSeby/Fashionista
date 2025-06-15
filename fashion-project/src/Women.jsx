@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Women.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Women() {
   const [womenItems, setWomenItems] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     fetch("http://localhost:5000/women")
@@ -12,6 +13,17 @@ function Women() {
       .then(data => setWomenItems(data))
       .catch(() => setWomenItems([]));
   }, []);
+
+  // Get search query from URL
+  const params = new URLSearchParams(location.search);
+  const search = params.get("search")?.toLowerCase() || "";
+
+  // Filter items by search
+  const filteredItems = search
+    ? womenItems.filter(item =>
+        item.name.toLowerCase().includes(search)
+      )
+    : womenItems;
 
   const handleBuyNow = (id) => {
     navigate(`/detailed/${id}`);
@@ -26,7 +38,7 @@ function Women() {
         </div>
       </section>
       <section className="women-items">
-        {womenItems.map(item => (
+        {filteredItems.map(item => (
           <div key={item._id || item.name} className="women-card">
             <img src={item.img || item.image} alt={item.name} className="women-img" />
             <div className="women-title">{item.name}</div>
@@ -34,6 +46,9 @@ function Women() {
             <button className="buy-btn" onClick={() => handleBuyNow(item._id)}>Show More</button>
           </div>
         ))}
+        {filteredItems.length === 0 && (
+          <div className="no-results">No products found.</div>
+        )}
       </section>
     </div>
   );

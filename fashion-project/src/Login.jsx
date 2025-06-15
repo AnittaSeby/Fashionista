@@ -24,6 +24,7 @@ function Login() {
       const data = await res.json();
       if (res.ok) {
         setMsg("Login successful!");
+        localStorage.setItem("isLoggedIn", "true");
         navigate("/");
       } else {
         setMsg(data.msg || "Login failed.");

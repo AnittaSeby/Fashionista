@@ -1,37 +1,47 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar() {
-  const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSearch = (e) => {
-    if (e.key === "Enter") {
-      const val = search.trim().toLowerCase();
-      if (
-        val === "women" ||
-        val.includes("women") ||
-        val.includes("lady") ||
-        val.includes("girl")
-      ) {
-        navigate("/women");
-      } else if (val === "men" || (val.includes("men") && !val.includes("women"))) {
-        navigate("/men");
-      } else if (
-        val === "accessories" ||
-        val === "accessory" ||
-        val.includes("accessor") ||
-        val.includes("bag") ||
-        val.includes("watch") ||
-        val.includes("wallet") ||
-        val.includes("sunglass") ||
-        val.includes("ornament")
-      ) {
-        navigate("/accessories");
-      }
+  useEffect(() => {
+    // Check login state from localStorage
+    setIsLoggedIn(!!localStorage.getItem("isLoggedIn"));
+  }, [location]);
+
+  // Real-time search handler
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    const path = location.pathname;
+    if (path.includes("/men")) {
+      navigate(`/men?search=${encodeURIComponent(value)}`);
+    } else if (path.includes("/women")) {
+      navigate(`/women?search=${encodeURIComponent(value)}`);
+    } else if (path.includes("/accessories")) {
+      navigate(`/accessories?search=${encodeURIComponent(value)}`);
     }
   };
+
+  const handleLoginLogout = () => {
+    if (isLoggedIn) {
+      localStorage.removeItem("isLoggedIn");
+      setIsLoggedIn(false);
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
+  };
+
+  // Only show search bar on men, women, or accessories pages
+  const showSearch =
+    location.pathname.startsWith("/men") ||
+    location.pathname.startsWith("/women") ||
+    location.pathname.startsWith("/accessories");
 
   return (
     <nav className="navbar">
@@ -42,20 +52,23 @@ function Navbar() {
         <button className="nav-btn" onClick={() => navigate("/accessories")}>Accessories</button>
       </div>
       <div className="navbar-right">
-        <input
-          className="nav-search"
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          onKeyDown={handleSearch}
-        />
+        {showSearch && (
+          <div className="navbar-search-form">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={handleSearchChange}
+              className="navbar-search-input"
+            />
+          </div>
+        )}
         <button
           className="nav-btn"
           style={{ marginLeft: "18px" }}
-          onClick={() => navigate("/login")}
+          onClick={handleLoginLogout}
         >
-          Sign In
+          {isLoggedIn ? "Logout" : "Sign in"}
         </button>
       </div>
     </nav>
@@ -63,3 +76,4 @@ function Navbar() {
 }
 
 export default Navbar;
+
