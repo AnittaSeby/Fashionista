@@ -12,6 +12,7 @@ import Signup from './Signup'
 import AdminLogin from './adminlogin'
 import AdminPage from './adminpage'
 import Detailed from './Detailed'
+import Payment from './Payment'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/detailed/:id" element={<Detailed />} />
+        <Route path="/payment" element={<Payment />} />
         <Route
           path="/"
           element={

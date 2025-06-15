@@ -1,0 +1,114 @@
+.payment-bg {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #fffde4 0%, #ffe9a9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px 24px;
+  background: #fffde4;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(255, 215, 79, 0.15);
+  text-align: center;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+}
+
+.payment-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(255, 215, 79, 0.18), 0 2px 8px rgba(0,0,0,0.06);
+  padding: 40px 32px 32px 32px;
+  max-width: 350px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.payment-title {
+  font-size: 2rem;
+  color: #e91e63;
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.payment-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.gpay-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  padding: 4px;
+}
+
+.payment-qr-section {
+  margin-bottom: 24px;
+}
+
+.payment-qr {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  border: 2px solid #ffd54f;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.payment-qr-text {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.payment-pay-btn {
+  padding: 12px 48px;
+  background: linear-gradient(90deg, #ffe082 0%, #ffd54f 100%);
+  color: #222;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(255, 215, 79, 0.15);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.payment-pay-btn:hover {
+  background: linear-gradient(90deg, #ffd54f 0%, #ffe082 100%);
+  transform: translateY(-2px) scale(1.04);
+  color: #e91e63;
+}
+
+.payment-success {
+  color: #388e3c;
+  font-size: 1.2rem;
+  margin-top: 18px;
+  font-weight: 600;
+}
+
+.payment-price {
+  font-size: 1.3rem;
+  color: #d81b60;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.payment-price span {
+  font-size: 1.4rem;
+  color: #222;
+  font-weight: 700;
+}

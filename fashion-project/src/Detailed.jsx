@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./Detailed.css";
 
 function Detailed() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:5000/detailed/${id}`)
@@ -25,7 +26,12 @@ function Detailed() {
       </div>
       <div className="detailed-description">{item.description}</div>
       <div className="detailed-price">{item.price}</div>
-      <button className="detailed-buy-btn">Buy Now</button>
+      <button
+        className="detailed-buy-btn"
+        onClick={() => navigate("/payment", { state: { price: item.price } })}
+      >
+        Buy Now
+      </button>
     </div>
   );
 }
